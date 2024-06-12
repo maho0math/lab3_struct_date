@@ -1,6 +1,8 @@
-﻿#include "list.h"
+#include "list.h"
 
 using namespace std;
+
+
 
 char getFoldType(const string& folds, int edge) {
     int n = folds.size();
@@ -103,6 +105,7 @@ string getFoldsMass(const string& edges, bool *foldTypes) {
 
 int main() {
     setlocale(LC_ALL, "RU");
+    cout << "Трифонов Матвей Михайлович\t" << "Группа: 090301 - ПОВа - о23\n" << endl;
     string folds;
     int edge;
     cout << "Введите строку символов из прописных букв \"П\" и \"З\": ";
@@ -111,25 +114,34 @@ int main() {
     cin >> edge;
     char foldType = getFoldType(folds, edge);
     cout << "Тип ребра: " << foldType << endl;
-    ///////////////////////////////
+    /////////////////////////////// с контейнером STL
     string edges;
+    cout << "с контейнером STL" << endl;
     cout << "Введите строку символов из прописных букв \"О\" и \"К\": ";
     cin >> edges;
+    auto start = chrono::high_resolution_clock::now();
     folds = getFolds(edges);
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double> diff =(end - start);
+    cout << "Время выполнения: " << diff.count() << " секунд" << endl;
     if (folds.empty()) {
         cout << "Такой строки не существует." << endl;
     }
     else {
         cout << "Последовательность типов сгибаний: " << folds << endl;
     }
-    ///////////////////////////////////////////////
+    /////////////////////////////////////////////// с массивом
     int n;
     n = edges.size();
     bool* foldTypes = new bool[n];
+    cout << "с массивом" << endl;
     cout << "Введите строку символов из прописных букв \"О\" и \"К\": ";
     cin >> edges;
-    
+    start = chrono::high_resolution_clock::now();
     folds = getFoldsMass(edges, foldTypes);
+    end = chrono::high_resolution_clock::now();
+    diff = (end - start);
+    cout << "Время выполнения: " << diff.count() << " секунд" << endl;
     if (folds.empty()) {
         cout << "Такой строки не существует." << endl;
     }
@@ -137,11 +149,16 @@ int main() {
         cout << "Последовательность типов сгибаний: " << folds << endl;
     }
     delete[] foldTypes;
-    //////////////////////////////////////////
+    ////////////////////////////////////////// с односвязным списком
     List <bool> foldTypesList;
+    cout << "со списком" << endl;
     cout << "Введите строку символов из прописных букв \"О\" и \"К\": ";
     cin >> edges;
+    start = chrono::high_resolution_clock::now();
     folds = getFoldsList(edges, foldTypesList);
+    end = chrono::high_resolution_clock::now();
+    diff =(end - start);
+    cout << "Время выполнения: " << diff.count() << " секунд" << endl;
     if (folds.empty()) {
         cout << "Такой строки не существует." << endl;
     }
